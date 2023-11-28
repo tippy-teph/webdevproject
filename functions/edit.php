@@ -14,8 +14,23 @@
             }
         }
         else{
-            mysql_query($dbc,"UPDATE tblsubject SET subject_code='$code', subject_name='$name' WHERE subject_id='$id'");
+            mysql_query($dbc,"UPDATE tblsubjects SET Subject_Code='$code', Subject_Name='$name' WHERE Subject_ID='$id'");
             header("Location: ../index.php")
         }
+    }
+
+    function edit(){
+        $sql = "UPDATE tblsubjects SET Subject_Code=:code, Subject_Name=:name WHERE Subject_ID = :id;";
+
+        $query=$this->db->connect()->prepare($sql);
+        $$query->bindParam(':Subject_Code', $this->code);
+        $query->bindParam(':Subject_Name', $this->name);
+        
+        if($query->execute()){
+            return true;
+        }
+        else{
+            return false;
+        }	
     }
 ?>
